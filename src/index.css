@@ -22,6 +22,7 @@
 
 * {
   scrollbar-color: var(--color-dark-100) var(--color-black);
+  box-sizing: border-box;
 }
 
 :root {
@@ -40,17 +41,18 @@
 }
 
 html {
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 body {
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
   background-color: #000;
   color: var(--color-dark-100);
   font-family: var(--font-semibold);
+  font-size: clamp(0.875rem, 1vw, 1.125rem);
 }
 
 @utility flex-center {
@@ -70,26 +72,33 @@ body {
 }
 
 @utility h3-semibold {
-  @apply font-semibold text-xl text-dark-100;
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  color: var(--color-dark-100);
 }
 
 @utility base-semibold {
-  @apply font-semibold text-base text-dark-100;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  color: var(--color-dark-100);
 }
 
 @utility small-medium {
-  @apply font-medium text-xs;
+  @apply font-medium;
+  font-size: clamp(0.7rem, 1vw, 0.75rem);
 }
 
 @layer components {
   header {
-    @apply w-screen fixed top-0 left-0 z-1000 flex-center bg-black min-h-[7vh];
+    @apply w-full fixed top-0 left-0 z-1000 flex-center bg-black;
+    min-height: clamp(50px, 7vh, 80px);
 
     nav {
       @apply container mx-auto flex-between px-5 2xl:px-0;
 
       img {
-        @apply cursor-pointer hover:-translate-y-0.5 transition-all duration-300 ease-in-out;
+        @apply cursor-pointer hover:-translate-y-0.5 transition-all duration-300 ease-in-out h-auto;
+        max-width: clamp(100px, 10vw, 150px);
 
         button {
           @apply bg-transparent border-none outline-none cursor-pointer;
@@ -100,33 +109,39 @@ body {
         @apply flex-center gap-8;
 
         a {
-          @apply hidden md:block text-white opacity-80 font-regular text-sm cursor-pointer hover:opacity-100 transition-all duration-300 ease-in-out;
+          @apply hidden md:block text-white opacity-80 font-regular cursor-pointer hover:opacity-100 transition-all duration-300 ease-in-out;
+          font-size: clamp(0.75rem, 1vw, 0.875rem);
         }
       }
     }
   }
 
   #hero {
-    @apply h-fit lg:h-[80vh] col-center mt-40 lg:mt-20 2xl:mt-[7vh];
+    @apply h-fit lg:min-h-[80vh] col-center;
+    margin-top: clamp(100px, 15vh, 200px);
 
     div {
-      @apply relative z-10 col-center lg:translate-y-16;
+      @apply relative z-10 col-center lg:translate-y-16 w-full;
 
       h1 {
-        @apply font-semibold lg:text-3xl 2xl:text-5xl text-white;
+        @apply font-semibold text-white text-center px-4;
+        font-size: clamp(1.75rem, 5vw, 4.5rem);
       }
 
       img {
-        @apply container mx-auto w-2/3;
+        @apply container mx-auto w-2/3 h-auto;
       }
     }
 
     video {
-      @apply mx-auto lg:translate-y-5 2xl:translate-y-0;
+      @apply mx-auto lg:translate-y-5 2xl:translate-y-0 max-w-full h-auto;
     }
 
     button {
-      @apply relative z-10 bg-primary text-white py-2 px-6 mt-10 lg:mt-0 mb-5 rounded-full font-semibold text-lg cursor-pointer hover:bg-white hover:text-black transition-all duration-300 ease-in-out;
+      @apply relative z-10 bg-primary text-white py-2 px-6 rounded-full font-semibold cursor-pointer hover:bg-white hover:text-black transition-all duration-300 ease-in-out;
+      margin-top: clamp(20px, 5vh, 40px);
+      margin-bottom: 20px;
+      font-size: clamp(1rem, 1.2vw, 1.125rem);
     }
 
     p {
@@ -135,28 +150,36 @@ body {
   }
 
   #product-viewer {
-    @apply container relative min-h-[93vh] mx-auto px-5 2xl:px-0 mt-40;
+    @apply container relative min-h-[93vh] mx-auto px-5 2xl:px-0;
+    margin-top: clamp(100px, 15vh, 200px);
 
     h2 {
-      @apply text-white font-semibold text-3xl lg:text-6xl;
+      @apply text-white font-semibold;
+      font-size: clamp(1.8rem, 6vw, 4rem);
     }
 
     .controls {
-      @apply absolute z-50 bottom-40 lg:bottom-40 2xl:bottom-52 left-1/2 -translate-x-1/2;
+      @apply absolute z-50 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4;
+      bottom: clamp(100px, 15vh, 200px);
 
       .info {
-        @apply text-xs text-white bg-black/20 px-2 py-1 rounded-lg;
+        @apply text-white bg-black/20 px-2 py-1 rounded-lg;
+        font-size: clamp(0.65rem, 1vw, 0.75rem);
       }
 
       .color-control {
         @apply flex-between bg-neutral-800 rounded-full px-6 py-3 gap-4;
 
         div {
-          @apply size-7 rounded-full cursor-pointer;
+          @apply rounded-full cursor-pointer;
+          width: clamp(20px, 2vw, 28px);
+          height: clamp(20px, 2vw, 28px);
         }
 
         .active {
-          @apply ring-5 size-5 ring-light-100;
+          @apply ring-5 ring-light-100;
+          width: clamp(16px, 1.5vw, 20px);
+          height: clamp(16px, 1.5vw, 20px);
         }
       }
 
@@ -164,13 +187,15 @@ body {
         @apply small-medium flex-between bg-neutral-800 rounded-full px-6 py-2.5 gap-2;
 
         div {
-          @apply size-8 rounded-full cursor-pointer bg-white text-black flex-center;
+          @apply rounded-full cursor-pointer bg-white text-black flex-center;
+          width: clamp(28px, 3vw, 32px);
+          height: clamp(28px, 3vw, 32px);
         }
       }
     }
 
     #canvas {
-      @apply !w-full !h-[80vh] lg:!h-dvh relative z-40;
+      @apply !w-full !h-[70vh] lg:!h-dvh relative z-40;
     }
   }
 
@@ -201,67 +226,71 @@ body {
     }
 
     .content {
-      @apply relative z-10 my-5 lg:-mt-40 bg-black font-semibold text-xl text-dark-100 lg:opacity-0;
+      @apply relative z-10 my-5 bg-black font-semibold text-dark-100 lg:opacity-0;
+      margin-top: clamp(-50px, -10vw, -160px);
 
       .wrapper {
         @apply container mx-auto px-5 pb-20 2xl:px-0 flex flex-col lg:flex-row justify-center gap-20;
       }
 
       h2 {
-        @apply font-semibold text-3xl lg:text-7xl text-white;
+        @apply font-semibold text-white;
+        font-size: clamp(1.8rem, 7vw, 4.5rem);
       }
 
       h3 {
-        @apply font-semibold text-xl lg:text-5xl text-white;
+        @apply font-semibold text-white;
+        font-size: clamp(1.2rem, 4vw, 3rem);
       }
     }
   }
 
   #performance {
-    @apply w-dvw h-full overflow-hidden pt-20 lg:pt-20 flex flex-col items-center relative;
+    @apply w-full h-full overflow-hidden flex flex-col items-center relative;
+    padding-top: clamp(40px, 8vh, 80px);
 
     h2 {
-      @apply font-semibold text-3xl lg:text-6xl text-white max-w-2xl text-center;
+      @apply font-semibold text-white text-center px-5;
+      font-size: clamp(1.8rem, 5vw, 3.75rem);
+      max-width: clamp(300px, 80vw, 700px);
     }
 
     .wrapper {
-      @apply w-7xl 2xl:w-[100rem] h-[50vh] lg:h-screen relative;
+      @apply relative;
+      width: clamp(320px, 95vw, 1600px);
+      height: clamp(400px, 70vh, 900px);
 
       img {
-        @apply max-w-40 lg:max-w-[27rem] 2xl:max-w-[35rem] object-cover object-center;
+        @apply object-cover object-center h-auto;
+        width: clamp(120px, 25vw, 500px);
       }
 
       .p1 {
         @apply absolute bottom-1/2 left-[23%] z-[1] max-sm:left-[33%];
       }
-
       .p2 {
         @apply absolute bottom-[40%] right-[17%] z-[3] max-sm:right-[37%];
       }
-
       .p3 {
         @apply absolute bottom-1/4 right-[15%] z-[2] max-sm:right-[35%];
       }
-
       .p4 {
         @apply absolute bottom-[15%] right-[10%] z-[1] max-sm:right-[30%];
       }
-
       .p5 {
         @apply absolute bottom-[20%] left-1/2 -translate-x-1/2 scale-150;
       }
-
       .p6 {
         @apply absolute bottom-1/4 left-1/4 z-[2] max-sm:left-[35%];
       }
-
       .p7 {
         @apply absolute bottom-[5%] left-[15%] z-[3] max-sm:left-[35%];
       }
     }
 
     .content {
-      @apply mx-auto max-w-xl mt-24;
+      @apply mx-auto max-w-xl;
+      margin-top: clamp(40px, 8vh, 100px);
 
       p {
         @apply lg:h3-semibold base-semibold text-center translate-y-10 opacity-0 px-5;
@@ -270,10 +299,13 @@ body {
   }
 
   #features {
-    @apply pt-40 relative;
+    @apply relative;
+    padding-top: clamp(80px, 15vh, 160px);
 
     h2 {
-      @apply text-white font-semibold text-3xl lg:text-7xl text-center max-w-3xl mx-auto;
+      @apply text-white font-semibold text-center mx-auto px-5;
+      font-size: clamp(1.8rem, 7vw, 4.5rem);
+      max-width: clamp(300px, 80vw, 800px);
     }
 
     #f-canvas {
@@ -281,7 +313,8 @@ body {
     }
 
     .box {
-      @apply max-w-xs absolute;
+      @apply absolute;
+      max-width: clamp(200px, 30vw, 320px);
 
       p {
         @apply lg:h3-semibold base-semibold;
@@ -290,14 +323,20 @@ body {
   }
 
   #highlights {
-    @apply container mx-auto lg:py-40 max-lg:px-5;
+    @apply container mx-auto max-lg:px-5;
+    padding-top: clamp(60px, 10vh, 160px);
+    padding-bottom: clamp(60px, 10vh, 160px);
 
     h2 {
-      @apply text-white font-semibold text-3xl lg:text-7xl text-center max-w-3xl mx-auto;
+      @apply text-white font-semibold text-center mx-auto;
+      font-size: clamp(1.8rem, 7vw, 4.5rem);
+      max-width: clamp(300px, 80vw, 800px);
     }
 
     h3 {
-      @apply text-[#F5F5F7] font-semibold text-xl lg:text-3xl text-center mt-10;
+      @apply text-[#F5F5F7] font-semibold text-center;
+      font-size: clamp(1.1rem, 3vw, 1.8rem);
+      margin-top: clamp(20px, 4vh, 40px);
     }
 
     .masonry {
@@ -307,22 +346,30 @@ body {
         @apply flex flex-col justify-between gap-5 opacity-0 -translate-y-5;
 
         div:first-of-type {
-          @apply h-full bg-[url(/highlight-bg.png)] bg-no-repeat bg-cover p-10 2xl:pt-32 lg:pt-20 rounded-3xl;
+          @apply h-full bg-[url(/highlight-bg.png)] bg-no-repeat bg-cover rounded-3xl;
+          padding: clamp(1.5rem, 4vw, 2.5rem);
+          padding-top: clamp(2rem, 8vw, 8rem);
 
           p {
-            @apply font-semibold text-4xl max-w-2xs;
+            @apply font-semibold;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            max-width: 250px;
           }
         }
 
         p {
-          @apply font-semibold text-4xl max-w-2xs;
+          @apply font-semibold;
+          font-size: clamp(1.5rem, 3vw, 2.25rem);
+          max-width: 250px;
         }
 
         div:last-of-type {
-          @apply bg-[#1D1D1F] p-10 rounded-3xl flex items-center gap-7;
+          @apply bg-[#1D1D1F] rounded-3xl flex items-center gap-7;
+          padding: clamp(1.5rem, 4vw, 2.5rem);
 
           p {
-            @apply font-semibold lg:text-2xl 2xl:text-3xl;
+            @apply font-semibold;
+            font-size: clamp(1.2rem, 2.5vw, 1.875rem);
           }
         }
       }
@@ -331,28 +378,32 @@ body {
         @apply flex flex-col justify-between gap-5 opacity-0 -translate-y-5;
 
         p {
-          @apply font-semibold text-4xl max-w-2xs;
+          @apply font-semibold;
+          font-size: clamp(1.5rem, 3vw, 2.25rem);
+          max-width: 250px;
         }
+
         .apple-gradient {
-          @apply p-10 rounded-3xl flex items-center gap-7 relative;
-
+          @apply rounded-3xl flex items-center gap-7 relative;
+          padding: clamp(1.5rem, 4vw, 2.5rem);
           background: #1d1d1f;
-          background-clip: padding-box; /* !important */
-          border: 3px solid transparent; /* !important */
+          background-clip: padding-box;
+          border: 3px solid transparent;
 
-          ::before {
+          &::before {
             content: "";
             pointer-events: none;
             position: absolute;
             inset: 0px;
             z-index: -1;
-            margin: -5px; /* !important */
-            border-radius: 24px; /* !important */
+            margin: -5px;
+            border-radius: 24px;
             background: linear-gradient(91deg, #0096ff 0%, #bb64ff 42%, #f2416b 74%, #eb7500 100%);
           }
 
           p {
-            @apply font-semibold lg:text-2xl 2xl:text-3xl;
+            @apply font-semibold;
+            font-size: clamp(1.2rem, 2.5vw, 1.875rem);
 
             span {
               background: linear-gradient(91deg, #0096ff 0%, #bb64ff 42%, #f2416b 74%, #eb7500 100%);
@@ -364,10 +415,14 @@ body {
         }
 
         div:last-of-type {
-          @apply h-full bg-[#1D1D1F] p-10 2xl:pt-32 lg:pt-20 rounded-3xl;
+          @apply h-full bg-[#1D1D1F] rounded-3xl;
+          padding: clamp(1.5rem, 4vw, 2.5rem);
+          padding-top: clamp(2rem, 8vw, 8rem);
 
           p {
-            @apply font-semibold text-4xl max-w-sm;
+            @apply font-semibold;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            max-width: 400px;
 
             .green-gradient {
               background: linear-gradient(90deg, #35a98a 0%, #6dd400 100%);
